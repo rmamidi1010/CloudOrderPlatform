@@ -11,7 +11,7 @@ export async function register(request: any, response: any) {
     return response.status(409).send({ message: "User registered" });
   }
 
-  const hash = bcrypt.hash(password, 10);
+  const hash = await bcrypt.hash(password, 10);
   users.set(email, hash);
 
   return response.status(201).send({ message: "User registered" });
@@ -21,7 +21,7 @@ export async function login(request: any, response: any) {
   const { email, password } = request.body;
   const hash = users.get(email);
 
-  if (!hash && !(await bcrypt.compare(password, hash))) {
+  if (!hash && hash != undefined && !(await bcrypt.compare(password, hash))) {
     return response.status(401).send({ message: "Invalid credentials" });
   }
 
