@@ -18,7 +18,7 @@ export const jwtPlugin = fp(async (app) => {
 
       try {
         const payload = jwt.verify(token, process.env.JWT_SECRET!);
-        request.headers = payload;
+        request.user = payload as any;
       } catch {
         return reply.status(401).send({ message: "Invalid or Expired token" });
       }
