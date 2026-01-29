@@ -8,4 +8,11 @@ declare module "fastify" {
       exp: number;
     };
   }
+
+  interface FastifyInstance {
+    authenticate: (
+      request: FastifyRequest,
+      reply: FastifyReply,
+    ) => Promise<void>;
+  }
 }
